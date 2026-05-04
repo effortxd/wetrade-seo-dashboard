@@ -3,534 +3,541 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WeTrade SEO Operations</title>
+<title>WeTrade SEO Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0d0d0e;
-  --ink-soft: #16161a;
   --panel: #1a1a1e;
+  --panel-2: #232328;
   --line: #2a2a30;
   --line-hot: #3a3a42;
   --cream: #f4f0e8;
   --bone: #c9c2b4;
-  --dim: #6b6b70;
-  --faint: #44444a;
+  --dim: #8b8b90;
   --accent: #c8451e;
   --accent-hot: #de5933;
-  --gold: #b8924a;
-  --green: #5b8c4f;
-  --red: #c14a4a;
-  --blue: #5b8db8;
+  --gold: #e0a23a;
+  --green: #6ab355;
+  --red: #d65f5f;
+  --blue: #6ba3d2;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   background: var(--ink);
   color: var(--cream);
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
-body {
-  background-image:
-    radial-gradient(1100px 600px at 85% -5%, rgba(200, 69, 30, 0.06), transparent),
-    radial-gradient(800px 500px at -5% 110%, rgba(184, 146, 74, 0.04), transparent);
-}
-.grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  z-index: 1;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 0.86 0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
 
-/* Topbar */
-.topbar {
+.demo-banner {
+  background: repeating-linear-gradient(45deg, #2a1f0a, #2a1f0a 12px, #1f1707 12px, #1f1707 24px);
+  border-bottom: 2px solid var(--gold);
+  padding: 10px 24px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--gold);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 50;
+}
+.demo-banner strong { color: var(--cream); margin-right: 8px; }
+
+.topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 14px 32px;
-  background: rgba(13, 13, 14, 0.85);
-  backdrop-filter: blur(12px);
+  padding: 20px 32px;
+  background: var(--ink);
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
 }
-.topbar-left { display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; color: var(--bone); }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--cream); font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
-.brand-mark { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); animation: pulse 2.4s ease-in-out infinite; }
+.brand-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; color: var(--cream); display: flex; align-items: center; gap: 12px; }
+.brand-mark { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 14px var(--accent); animation: pulse 2.4s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
-.brand-dim { color: var(--dim); font-weight: 400; }
-.topbar-sep { color: var(--faint); }
-.topbar-meta { font-size: 11px; }
+.brand-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; }
+.last-update { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--dim); }
+.last-update span { color: var(--green); }
 
-.topbar-right { display: flex; align-items: stretch; gap: 0; border-left: 1px solid var(--line); }
-.stat { display: flex; flex-direction: column; align-items: flex-end; padding: 0 18px; border-right: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; min-width: 80px; }
-.stat:last-child { border-right: none; }
-.stat-num { font-size: 17px; font-weight: 600; color: var(--cream); line-height: 1.2; }
-.stat-label { font-size: 9px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
-.stat-impact .stat-num { color: var(--accent); }
+.hero { padding: 72px 48px 56px; max-width: 1280px; margin: 0 auto; }
+.hero-eyebrow { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.hero-title { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(48px, 7vw, 80px); line-height: 1; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 18px; }
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-subtitle { font-size: 18px; color: var(--bone); max-width: 660px; line-height: 1.55; }
 
-/* Hero */
-.hero { padding: 96px 48px 64px; max-width: 1180px; margin: 0 auto; position: relative; z-index: 2; }
-.hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 18px; }
-.display { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(56px, 8vw, 96px); line-height: 0.95; letter-spacing: -0.02em; color: var(--cream); }
-.display em { font-style: italic; color: var(--accent); }
-.hero-sub { margin-top: 24px; font-size: 16px; color: var(--bone); max-width: 580px; line-height: 1.6; }
+.summary { max-width: 1280px; margin: 0 auto; padding: 0 48px 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.summary-card { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 22px 24px; position: relative; overflow: hidden; }
+.summary-card::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.summary-card.bad::after { background: var(--red); }
+.summary-card.warn::after { background: var(--gold); }
+.summary-card.good::after { background: var(--green); }
+.summary-card.info::after { background: var(--blue); }
+.summary-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 12px; }
+.summary-number { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 56px; font-weight: 400; line-height: 0.95; color: var(--cream); margin-bottom: 8px; }
+.summary-card.bad .summary-number { color: var(--red); }
+.summary-card.warn .summary-number { color: var(--gold); }
+.summary-card.good .summary-number { color: var(--green); }
+.summary-card.info .summary-number { color: var(--blue); }
+.summary-detail { font-size: 13px; color: var(--bone); line-height: 1.4; }
+@media (max-width: 1100px) { .summary { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .summary { grid-template-columns: 1fr; } }
 
-/* Tabs */
-.tabs-wrap { max-width: 1180px; margin: 0 auto 32px; padding: 0 48px; position: relative; z-index: 2; border-bottom: 1px solid var(--line); }
-.tabs { display: flex; gap: 0; }
-.tab { background: none; border: none; border-bottom: 2px solid transparent; padding: 14px 20px; color: var(--dim); font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; font-weight: 500; }
-.tab:hover { color: var(--bone); }
-.tab.active { color: var(--cream); border-bottom-color: var(--accent); }
-.tab-count { display: inline-block; margin-left: 6px; padding: 2px 7px; background: var(--ink-soft); border: 1px solid var(--line); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--bone); }
-.tab.active .tab-count { background: var(--accent); color: var(--cream); border-color: var(--accent); }
+.section { max-width: 1280px; margin: 0 auto 56px; padding: 0 48px; }
+.section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--line); }
+.section-num { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 36px; color: var(--gold); line-height: 1; }
+.section-title { font-size: 26px; font-weight: 700; color: var(--cream); letter-spacing: -0.01em; }
+.section-subtitle { margin-left: auto; font-size: 14px; color: var(--dim); }
 
-/* Main */
-.main { max-width: 1180px; margin: 0 auto; padding: 0 48px 96px; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 16px; }
+.issue-card { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; margin-bottom: 14px; overflow: hidden; }
+.issue-card.urgent { border-left: 4px solid var(--red); }
+.issue-card.action { border-left: 4px solid var(--gold); }
+.issue-row { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; padding: 22px 26px; }
+.issue-icon { width: 56px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 28px; flex-shrink: 0; }
+.issue-card.urgent .issue-icon { background: rgba(214, 95, 95, 0.15); color: var(--red); }
+.issue-card.action .issue-icon { background: rgba(224, 162, 58, 0.15); color: var(--gold); }
+.issue-content { min-width: 0; }
+.issue-headline { font-size: 18px; font-weight: 600; color: var(--cream); margin-bottom: 4px; line-height: 1.3; }
+.issue-explain { font-size: 14px; color: var(--bone); line-height: 1.5; }
+.issue-explain code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--ink); padding: 2px 6px; border-radius: 2px; color: var(--gold); }
+.issue-action { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
 
-/* Cards */
-.card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  position: relative;
-  transition: border-color 0.15s;
-  overflow: hidden;
-}
-.card:hover { border-color: var(--line-hot); }
-.card[data-status="pending"]   { border-left: 3px solid var(--accent); }
-.card[data-status="approved"]  { border-left: 3px solid var(--green); }
-.card[data-status="executed"]  { border-left: 3px solid var(--blue); }
-.card[data-status="urgent"]    { border-left: 3px solid var(--red); }
-
-/* Card head */
-.card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 22px; border-bottom: 1px solid var(--line); background: var(--ink-soft); }
-.card-head-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-.type-badge { display: inline-block; padding: 4px 9px; background: var(--ink); border: 1px solid var(--line-hot); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); border-radius: 2px; white-space: nowrap; }
-.type-badge.urgent { color: var(--red); border-color: var(--red); }
-.target-url { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--bone); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-.target-url:hover { color: var(--cream); }
-.confidence-pill { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--bone); white-space: nowrap; }
-.confidence-bar { width: 48px; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; position: relative; }
-.confidence-fill { position: absolute; inset: 0; background: linear-gradient(90deg, var(--red) 0%, var(--accent) 50%, var(--green) 100%); transform-origin: left; }
-
-/* Card body */
-.card-body { padding: 22px; display: grid; gap: 18px; }
-.diff { display: grid; gap: 8px; }
-.diff-row { display: grid; grid-template-columns: 60px 1fr; gap: 14px; align-items: start; }
-.diff-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; padding-top: 6px; }
-.diff-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.55; padding: 8px 12px; border-radius: 2px; word-break: break-word; }
-.diff-value.current { background: rgba(193, 74, 74, 0.06); border-left: 2px solid rgba(193, 74, 74, 0.4); color: var(--bone); text-decoration: line-through; text-decoration-color: rgba(193, 74, 74, 0.4); }
-.diff-value.proposed { background: rgba(91, 140, 79, 0.07); border-left: 2px solid var(--green); color: var(--cream); }
-
-.reasoning { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; font-style: italic; line-height: 1.55; color: var(--cream); padding-left: 14px; border-left: 2px solid var(--gold); }
-.reasoning-summary { display: block; font-family: 'Inter', sans-serif; font-size: 11px; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 500; }
-
-.evidence { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
-.metric { background: var(--ink-soft); padding: 12px 14px; }
-.metric-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
-.metric-value { margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; color: var(--cream); line-height: 1; }
-
-.queries { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip { display: inline-block; padding: 4px 10px; background: var(--ink); border: 1px solid var(--line); border-radius: 2px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--bone); }
-.section-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; font-weight: 500; }
-
-.impact-strip { display: flex; align-items: baseline; gap: 10px; padding: 14px 16px; background: linear-gradient(90deg, rgba(200, 69, 30, 0.1), transparent); border-left: 2px solid var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--bone); border-radius: 2px; }
-.impact-strip strong { font-size: 22px; font-weight: 500; color: var(--accent); font-family: 'Instrument Serif', Georgia, serif; font-style: italic; }
-
-/* Card foot */
-.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 22px; border-top: 1px solid var(--line); background: var(--ink); }
-.card-foot-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); }
-.actions { display: flex; gap: 8px; }
-.btn { padding: 9px 18px; border: 1px solid transparent; background: none; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.12s; white-space: nowrap; }
-.btn-primary { background: var(--accent); color: var(--cream); border-color: var(--accent); }
+.btn { padding: 10px 20px; border: 1px solid transparent; background: none; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.15s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary { background: var(--accent); color: var(--cream); }
 .btn-primary:hover { background: var(--accent-hot); }
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: #f0b347; }
 .btn-ghost { color: var(--bone); border-color: var(--line-hot); }
 .btn-ghost:hover { color: var(--cream); border-color: var(--cream); }
-.btn-success { background: var(--green); color: var(--cream); border-color: var(--green); }
-.btn-danger { color: var(--red); border-color: rgba(193, 74, 74, 0.3); }
-.btn-danger:hover { background: rgba(193, 74, 74, 0.4); color: var(--cream); }
+.btn-big { padding: 14px 26px; font-size: 13px; }
+.btn-arrow { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 18px; letter-spacing: 0; }
+.action-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); }
 
-.status-note { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--bone); }
-.status-note.executed { color: var(--blue); }
-.status-note.urgent { color: var(--red); }
+.batch-card { background: linear-gradient(135deg, rgba(224, 162, 58, 0.12), rgba(224, 162, 58, 0.04)); border: 1px solid var(--gold); border-radius: 4px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 14px; }
+.batch-content { flex: 1; }
+.batch-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.batch-title { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 32px; line-height: 1.15; color: var(--cream); margin-bottom: 8px; letter-spacing: -0.01em; }
+.batch-title em { color: var(--gold); }
+.batch-detail { font-size: 14px; color: var(--bone); line-height: 1.5; max-width: 520px; }
 
-/* One-click banner */
-.oneclick-banner { background: linear-gradient(90deg, rgba(184, 146, 74, 0.15), rgba(184, 146, 74, 0.04)); border: 1px solid var(--gold); padding: 22px 24px; border-radius: 2px; display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 8px; }
-.oneclick-content { flex: 1; }
-.oneclick-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-.oneclick-title { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 26px; line-height: 1.2; color: var(--cream); }
-.oneclick-title em { color: var(--gold); }
-.oneclick-sub { font-size: 13px; color: var(--bone); margin-top: 6px; }
-.btn-gold { background: var(--gold); color: var(--ink); padding: 14px 24px; font-size: 12px; }
-.btn-gold:hover { background: #c9a25b; }
+.proposal-card { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 4px; margin-bottom: 14px; overflow: hidden; }
+.proposal-head { background: var(--panel-2); padding: 16px 26px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.proposal-head-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.tag { display: inline-block; padding: 4px 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px; font-weight: 500; }
+.tag-type { background: var(--ink); color: var(--accent); border: 1px solid var(--accent); }
+.tag-page { color: var(--bone); }
+.proposal-impact { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 26px; color: var(--green); line-height: 1; }
+.proposal-impact-label { font-family: 'Inter', sans-serif; font-size: 11px; font-style: normal; color: var(--dim); margin-left: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* Section heading */
-.section-heading { display: flex; align-items: baseline; gap: 16px; margin: 32px 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-.section-heading h2 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 28px; color: var(--cream); letter-spacing: -0.01em; }
-.section-heading h2 em { font-style: italic; color: var(--gold); }
-.section-heading-count { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); margin-left: auto; }
+.proposal-body { padding: 24px 26px; display: grid; gap: 20px; }
+.what-label, .why-label, .proof-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.why-label { color: var(--gold); }
+.what-row { display: grid; grid-template-columns: 80px 1fr; gap: 16px; align-items: start; margin-bottom: 8px; }
+.what-row-label { font-size: 12px; font-weight: 600; color: var(--dim); padding-top: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+.what-row-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.5; padding: 10px 14px; border-radius: 3px; word-break: break-word; }
+.what-row-value.before { background: rgba(214, 95, 95, 0.08); border-left: 3px solid var(--red); color: var(--bone); text-decoration: line-through; text-decoration-color: rgba(214, 95, 95, 0.5); }
+.what-row-value.after { background: rgba(106, 179, 85, 0.08); border-left: 3px solid var(--green); color: var(--cream); }
 
-@media (max-width: 800px) {
-  .topbar { padding: 12px 16px; flex-wrap: wrap; }
-  .topbar-right { display: none; }
-  .hero { padding: 56px 24px 32px; }
-  .tabs-wrap { padding: 0 24px; overflow-x: auto; }
-  .main { padding: 0 16px 64px; }
-  .oneclick-banner { flex-direction: column; align-items: flex-start; }
+.why-section { background: var(--panel-2); border-left: 3px solid var(--gold); padding: 16px 18px; border-radius: 3px; }
+.why-text { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; font-style: italic; line-height: 1.5; color: var(--cream); }
+
+.proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.proof-cell { background: var(--panel-2); padding: 14px 16px; }
+.proof-cell-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.proof-cell-value { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: 28px; color: var(--cream); line-height: 1; }
+.proof-cell-extra { margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); }
+@media (max-width: 760px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.proposal-foot { border-top: 1px solid var(--line); background: var(--ink); padding: 16px 26px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.proposal-foot-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); }
+.proposal-actions { display: flex; gap: 10px; }
+
+.done-row { display: grid; grid-template-columns: 24px 1fr auto auto; gap: 16px; align-items: center; padding: 14px 22px; background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 3px; margin-bottom: 8px; font-size: 14px; }
+.done-check { width: 22px; height: 22px; background: var(--green); border-radius: 50%; color: var(--ink); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.done-text { color: var(--bone); }
+.done-text strong { color: var(--cream); }
+.done-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); }
+
+footer { text-align: center; padding: 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--dim); border-top: 1px solid var(--line); }
+
+@media (max-width: 700px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 20px; }
+  .hero { padding: 48px 20px 32px; }
+  .summary { padding: 0 20px 32px; }
+  .section { padding: 0 20px; }
+  .issue-row { grid-template-columns: 1fr; }
+  .issue-action { align-items: flex-start; }
+  .batch-card { flex-direction: column; align-items: flex-start; }
+  .what-row { grid-template-columns: 1fr; gap: 4px; }
+  .what-row-label { padding-top: 0; }
 }
 </style>
 </head>
 <body>
 
-<div class="grain"></div>
+<div class="demo-banner">
+  <strong>PROTOTYPE</strong> — This is a design preview. Numbers are illustrative. The real version connects to wetrademarketing.com data once content is published and Google Search Console accumulates data (~2–3 months from launch).
+</div>
 
 <header class="topbar">
-  <div class="topbar-left">
-    <span class="brand">
-      <span class="brand-mark"></span>
-      WeTrade<span class="brand-dim">/seo-ops</span>
-    </span>
-    <span class="topbar-sep">·</span>
-    <span class="topbar-meta">last run · today, 02:00 AM · wetrademarketing.com</span>
+  <div class="brand-name">
+    <span class="brand-mark"></span>
+    WeTrade SEO Dashboard
+    <span class="brand-tag">wetrademarketing.com</span>
   </div>
-  <div class="topbar-right">
-    <span class="stat"><span class="stat-num">2</span><span class="stat-label">urgent</span></span>
-    <span class="stat"><span class="stat-num">12</span><span class="stat-label">pending</span></span>
-    <span class="stat"><span class="stat-num">8</span><span class="stat-label">auto-safe</span></span>
-    <span class="stat"><span class="stat-num">47</span><span class="stat-label">executed (30d)</span></span>
-    <span class="stat stat-impact"><span class="stat-num">+1,247</span><span class="stat-label">est. monthly clicks</span></span>
+  <div class="last-update">
+    <span>●</span> last checked · today, 2:00 AM (auto-runs every night)
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-eyebrow">Daily SEO Operations · April 28, 2026</div>
-  <h1 class="display">Today's <em>queue</em>.</h1>
-  <p class="hero-sub">
-    Two issues need attention now. Eight are safe to auto-fix in one click. Twelve more proposals are waiting for your review.
+  <div class="hero-eyebrow">Daily SEO Check · Today</div>
+  <h1 class="hero-title">You have <em>4 things</em> to look at today.</h1>
+  <p class="hero-subtitle">
+    The dashboard runs every night automatically. It checks your site, finds problems, and queues up safe fixes. Most days, you'll spend 5 minutes here.
   </p>
 </section>
 
-<nav class="tabs-wrap">
-  <div class="tabs">
-    <button class="tab active">Today <span class="tab-count">22</span></button>
-    <button class="tab">Approved <span class="tab-count">3</span></button>
-    <button class="tab">Executed <span class="tab-count">47</span></button>
-    <button class="tab">Impact</button>
-    <button class="tab">All</button>
+<section class="summary">
+  <div class="summary-card bad">
+    <div class="summary-label">Urgent</div>
+    <div class="summary-number">2</div>
+    <div class="summary-detail">Broken pages or big ranking drops. <strong>Look at these first.</strong></div>
   </div>
-</nav>
+  <div class="summary-card warn">
+    <div class="summary-label">One-click fixes</div>
+    <div class="summary-number">8</div>
+    <div class="summary-detail">Safe to apply automatically. Hit one button — done in 30 seconds.</div>
+  </div>
+  <div class="summary-card info">
+    <div class="summary-label">Need your judgment</div>
+    <div class="summary-number">12</div>
+    <div class="summary-detail">Suggestions to improve titles, descriptions, headings. Approve, edit, or reject each.</div>
+  </div>
+  <div class="summary-card good">
+    <div class="summary-label">Already done</div>
+    <div class="summary-number">47</div>
+    <div class="summary-detail">Changes applied in the last 30 days. Tracking impact on each.</div>
+  </div>
+</section>
 
-<main class="main">
-
-  <!-- Urgent section -->
-  <div class="section-heading">
-    <h2>Urgent <em>— fix now</em></h2>
-    <span class="section-heading-count">2 issues</span>
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Urgent — fix today</h2>
+    <span class="section-subtitle">2 problems blocking traffic</span>
   </div>
 
-  <article class="card" data-status="urgent">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge urgent">5XX ERROR</span>
-        <a class="target-url" href="#">wetrademarketing.com/pt/copy-trading-guia</a>
+  <div class="issue-card urgent">
+    <div class="issue-row">
+      <div class="issue-icon">!</div>
+      <div class="issue-content">
+        <div class="issue-headline">A page is broken — visitors see an error</div>
+        <p class="issue-explain">
+          The page <code>/pt/copy-trading-guia</code> is returning a server error (502). Detected at 4:23 AM. This page got <strong>2,843 clicks last month</strong> from Google — every hour it stays broken costs about 4 visitors. Not something this tool can fix automatically — your IT team needs to look at the server.
+        </p>
       </div>
-      <span class="confidence-pill" style="color: var(--red);">page down · detected 04:23 AM</span>
-    </header>
-    <div class="card-body">
-      <blockquote class="reasoning">
-        <span class="reasoning-summary">What broke</span>
-        Page returned 502 Bad Gateway on the last 4 crawls. This page received 2,843 organic clicks last month — every hour offline costs roughly 4 organic visits. Not auto-fixable; requires server investigation.
-      </blockquote>
-    </div>
-    <footer class="card-foot">
-      <span class="status-note urgent">⚠ blocking · server-side fix needed</span>
-      <div class="actions">
-        <button class="btn btn-ghost">View server logs</button>
-        <button class="btn btn-primary">Mark resolved</button>
-      </div>
-    </footer>
-  </article>
-
-  <article class="card" data-status="urgent">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge urgent">RANKING DROP</span>
-        <a class="target-url" href="#">wetrademarketing.com/id/cara-trading-forex</a>
-      </div>
-      <span class="confidence-pill" style="color: var(--red);">−7 positions overnight</span>
-    </header>
-    <div class="card-body">
-      <blockquote class="reasoning">
-        <span class="reasoning-summary">What changed</span>
-        Page dropped from #4 to #11 for "cara trading forex" overnight (impressions still strong, CTR collapsed). Likely cause: competitor cmcmarkets.id published a similar guide yesterday. Recommend content refresh + 3 new internal links from related pages.
-      </blockquote>
-      <div class="evidence">
-        <div class="metric"><div class="metric-label">Position yesterday</div><div class="metric-value">4.1</div></div>
-        <div class="metric"><div class="metric-label">Position today</div><div class="metric-value" style="color: var(--red);">11.3</div></div>
-        <div class="metric"><div class="metric-label">Impressions /28d</div><div class="metric-value">8.9k</div></div>
-        <div class="metric"><div class="metric-label">Est. clicks at risk</div><div class="metric-value" style="color: var(--red);">−240/mo</div></div>
+      <div class="issue-action">
+        <button class="btn btn-primary btn-big">Send to IT team <span class="btn-arrow">→</span></button>
+        <span class="action-meta">or mark resolved</span>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="status-note urgent">⚠ traffic at risk</span>
-      <div class="actions">
-        <button class="btn btn-ghost">View competitor</button>
-        <button class="btn btn-primary">Generate refresh</button>
-      </div>
-    </footer>
-  </article>
-
-  <!-- One-click auto-safe banner -->
-  <div class="section-heading">
-    <h2>Auto-safe <em>— one click</em></h2>
-    <span class="section-heading-count">8 fixes ready</span>
   </div>
 
-  <div class="oneclick-banner">
-    <div class="oneclick-content">
-      <div class="oneclick-eyebrow">SAFE TO BATCH-APPLY</div>
-      <h3 class="oneclick-title">Apply all <em>8 auto-safe fixes</em> now</h3>
-      <p class="oneclick-sub">Missing meta descriptions, broken canonicals, alt-text gaps. All snapshotted — rollback in one click if anything looks wrong.</p>
-    </div>
-    <button class="btn btn-gold">Apply all 8 →</button>
-  </div>
-
-  <article class="card" data-status="approved">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge">META DESC</span>
-        <a class="target-url" href="#">wetrademarketing.com/pt/forex-malaysia</a>
+  <div class="issue-card urgent">
+    <div class="issue-row">
+      <div class="issue-icon">↓</div>
+      <div class="issue-content">
+        <div class="issue-headline">A page lost its ranking overnight</div>
+        <p class="issue-explain">
+          <code>/id/cara-trading-forex</code> dropped from <strong>position #4 to #11</strong> on Google for "cara trading forex". A competitor (cmcmarkets.id) published a similar guide yesterday — that's likely why. If you don't update this page within a week, you'll lose around <strong>240 clicks per month</strong>.
+        </p>
       </div>
-      <span class="confidence-pill">conf <span class="confidence-bar"><span class="confidence-fill" style="transform: scaleX(0.92)"></span></span> 92%</span>
-    </header>
-    <div class="card-body">
-      <div class="diff">
-        <div class="diff-row">
-          <div class="diff-label">Now</div>
-          <div class="diff-value current">(missing)</div>
-        </div>
-        <div class="diff-row">
-          <div class="diff-label">Next</div>
-          <div class="diff-value proposed">Aprenda como começar a operar forex no mercado da Malásia. Guia completo com estratégias, riscos e regulamentação local da Malaysia.</div>
-        </div>
+      <div class="issue-action">
+        <button class="btn btn-primary btn-big">Update the page <span class="btn-arrow">→</span></button>
+        <span class="action-meta">or see competitor</span>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="card-foot-meta">auto-fix · meta description missing entirely</span>
-      <div class="actions">
-        <button class="btn btn-ghost">Skip</button>
-        <button class="btn btn-primary">Apply</button>
-      </div>
-    </footer>
-  </article>
+  </div>
+</section>
 
-  <!-- Pending review section -->
-  <div class="section-heading">
-    <h2>Review <em>queue</em></h2>
-    <span class="section-heading-count">12 proposals · ranked by impact</span>
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2 class="section-title">One-click safe fixes</h2>
+    <span class="section-subtitle">8 small problems we can fix instantly</span>
   </div>
 
-  <article class="card" data-status="pending">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge">TITLE</span>
-        <a class="target-url" href="#">wetrademarketing.com/pt/copy-trading-guia</a>
+  <div class="batch-card">
+    <div class="batch-content">
+      <div class="batch-label">SAFE TO APPLY ALL AT ONCE</div>
+      <h3 class="batch-title">Fix all <em>8 problems</em> with one click</h3>
+      <p class="batch-detail">
+        These are simple, safe fixes — missing meta descriptions, broken canonical tags, missing alt text on images. Nothing creative, nothing risky. Each fix is saved as a backup before applying — if anything looks wrong tomorrow, you can undo any of them with one click.
+      </p>
+    </div>
+    <div>
+      <button class="btn btn-gold btn-big">Fix all 8 now <span class="btn-arrow">→</span></button>
+    </div>
+  </div>
+
+  <div class="issue-card action">
+    <div class="issue-row">
+      <div class="issue-icon">+</div>
+      <div class="issue-content">
+        <div class="issue-headline">Page is missing its meta description</div>
+        <p class="issue-explain">
+          <code>/pt/forex-malaysia</code> has no description for Google to show. Without one, Google picks a random sentence from the page — usually a bad one. We wrote a proper description that includes the right keywords.
+        </p>
       </div>
-      <span class="confidence-pill">conf <span class="confidence-bar"><span class="confidence-fill" style="transform: scaleX(0.62)"></span></span> 62%</span>
-    </header>
-    <div class="card-body">
-      <div class="diff">
-        <div class="diff-row">
-          <div class="diff-label">Now</div>
-          <div class="diff-value current">Guia de Copy Trading | WeTrade</div>
-        </div>
-        <div class="diff-row">
-          <div class="diff-label">Next</div>
-          <div class="diff-value proposed">Copy Trading: Guia Completo Para Iniciantes 2026 | WeTrade</div>
-        </div>
+      <div class="issue-action">
+        <button class="btn btn-primary">Apply this fix</button>
+        <span class="action-meta">or skip for now</span>
       </div>
-      <blockquote class="reasoning">
-        <span class="reasoning-summary">Why</span>
-        Page ranks #14 for "copy trading guia" (4.2k impressions / 28d) but CTR is 1.2% versus 3.8% category average. Top 3 SERP results all use "completo" or "iniciantes" modifier — the title is failing the click test.
-      </blockquote>
-      <div class="evidence">
-        <div class="metric"><div class="metric-label">Position</div><div class="metric-value">14.3</div></div>
-        <div class="metric"><div class="metric-label">Impressions /28d</div><div class="metric-value">4.2k</div></div>
-        <div class="metric"><div class="metric-label">Clicks /28d</div><div class="metric-value">51</div></div>
-        <div class="metric"><div class="metric-label">CTR</div><div class="metric-value">1.2%</div></div>
+    </div>
+  </div>
+
+  <div class="issue-card action">
+    <div class="issue-row">
+      <div class="issue-icon">+</div>
+      <div class="issue-content">
+        <div class="issue-headline">7 more small fixes ready</div>
+        <p class="issue-explain">
+          Missing alt text on 3 images, two duplicate canonical tags, two pages over the 60-character title limit. All safe, all easily reversible.
+        </p>
+      </div>
+      <div class="issue-action">
+        <button class="btn btn-ghost">See all 7</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Need your judgment</h2>
+    <span class="section-subtitle">12 suggestions ranked by impact — top 3 shown</span>
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-head">
+      <div class="proposal-head-left">
+        <span class="tag tag-type">Title rewrite</span>
+        <span class="tag tag-page">/pt/copy-trading-guia</span>
       </div>
       <div>
-        <div class="section-label">Top queries</div>
-        <div class="queries">
-          <span class="chip">copy trading guia</span>
-          <span class="chip">como funciona copy trading</span>
-          <span class="chip">copy trading iniciantes</span>
-          <span class="chip">guia copy trading brasil</span>
-        </div>
-      </div>
-      <div class="impact-strip">
-        <strong>+94</strong>
-        <span>monthly clicks · 51 → 145 · over 60 days</span>
+        <span class="proposal-impact">+94</span>
+        <span class="proposal-impact-label">extra clicks per month</span>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="card-foot-meta">60d horizon</span>
-      <div class="actions">
+
+    <div class="proposal-body">
+      <div>
+        <div class="what-label">What we want to change</div>
+        <div class="what-row">
+          <div class="what-row-label">Now</div>
+          <div class="what-row-value before">Guia de Copy Trading | WeTrade</div>
+        </div>
+        <div class="what-row">
+          <div class="what-row-label">After</div>
+          <div class="what-row-value after">Copy Trading: Guia Completo Para Iniciantes 2026 | WeTrade</div>
+        </div>
+      </div>
+
+      <div class="why-section">
+        <div class="why-label">Why this matters</div>
+        <div class="why-text">
+          People are seeing this page on Google but not clicking it. The current title is generic — competitors use the words "completo" (complete) and "iniciantes" (beginners), which is what people actually search for. Adding those words should roughly triple the click rate.
+        </div>
+      </div>
+
+      <div>
+        <div class="proof-label">The numbers backing this up</div>
+        <div class="proof-grid">
+          <div class="proof-cell">
+            <div class="proof-cell-label">Position on Google</div>
+            <div class="proof-cell-value">#14</div>
+            <div class="proof-cell-extra">page 2 of results</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell-label">People who saw it</div>
+            <div class="proof-cell-value">4,200</div>
+            <div class="proof-cell-extra">last 28 days</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell-label">People who clicked</div>
+            <div class="proof-cell-value">51</div>
+            <div class="proof-cell-extra">only 1.2%</div>
+          </div>
+          <div class="proof-cell">
+            <div class="proof-cell-label">Industry average</div>
+            <div class="proof-cell-value">3.8%</div>
+            <div class="proof-cell-extra">we're below</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proposal-foot">
+      <span class="proposal-foot-meta">expect to see results within 60 days</span>
+      <div class="proposal-actions">
         <button class="btn btn-ghost">Reject</button>
-        <button class="btn btn-ghost">Edit</button>
-        <button class="btn btn-primary">Approve</button>
-      </div>
-    </footer>
-  </article>
-
-  <article class="card" data-status="pending">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge">META DESC</span>
-        <a class="target-url" href="#">wetrademarketing.com/id/cara-trading-forex</a>
-      </div>
-      <span class="confidence-pill">conf <span class="confidence-bar"><span class="confidence-fill" style="transform: scaleX(0.55)"></span></span> 55%</span>
-    </header>
-    <div class="card-body">
-      <div class="diff">
-        <div class="diff-row">
-          <div class="diff-label">Now</div>
-          <div class="diff-value current">WeTrade adalah platform trading forex terbaik. Daftar sekarang.</div>
-        </div>
-        <div class="diff-row">
-          <div class="diff-label">Next</div>
-          <div class="diff-value proposed">Pelajari cara trading forex dari nol — strategi, analisis teknikal, dan manajemen risiko. Panduan lengkap untuk pemula di Indonesia, gratis dari WeTrade.</div>
-        </div>
-      </div>
-      <blockquote class="reasoning">
-        <span class="reasoning-summary">Why</span>
-        Current description is brand-first and adds no information beyond the title. Top queries indicate users want educational content (how-to, strategy, risk management), not a sales pitch. SERP competitors all lead with educational framing.
-      </blockquote>
-      <div class="impact-strip">
-        <strong>+153</strong>
-        <span>monthly clicks · 187 → 340 · over 60 days</span>
+        <button class="btn btn-ghost">Edit first</button>
+        <button class="btn btn-primary">Approve & apply <span class="btn-arrow">→</span></button>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="card-foot-meta">60d horizon</span>
-      <div class="actions">
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-head">
+      <div class="proposal-head-left">
+        <span class="tag tag-type">Description rewrite</span>
+        <span class="tag tag-page">/id/cara-trading-forex</span>
+      </div>
+      <div>
+        <span class="proposal-impact">+153</span>
+        <span class="proposal-impact-label">extra clicks per month</span>
+      </div>
+    </div>
+
+    <div class="proposal-body">
+      <div>
+        <div class="what-label">What we want to change</div>
+        <div class="what-row">
+          <div class="what-row-label">Now</div>
+          <div class="what-row-value before">WeTrade adalah platform trading forex terbaik. Daftar sekarang.</div>
+        </div>
+        <div class="what-row">
+          <div class="what-row-label">After</div>
+          <div class="what-row-value after">Pelajari cara trading forex dari nol — strategi, analisis teknikal, dan manajemen risiko. Panduan lengkap untuk pemula di Indonesia, gratis dari WeTrade.</div>
+        </div>
+      </div>
+
+      <div class="why-section">
+        <div class="why-label">Why this matters</div>
+        <div class="why-text">
+          The current description is just a sales pitch — "WeTrade is the best, sign up now." But people searching for "how to trade forex" want to learn, not be sold to. The new version describes what they'll learn and matches their intent. Better matches = more clicks.
+        </div>
+      </div>
+    </div>
+
+    <div class="proposal-foot">
+      <span class="proposal-foot-meta">expect to see results within 60 days</span>
+      <div class="proposal-actions">
         <button class="btn btn-ghost">Reject</button>
-        <button class="btn btn-ghost">Edit</button>
-        <button class="btn btn-primary">Approve</button>
-      </div>
-    </footer>
-  </article>
-
-  <article class="card" data-status="pending">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge">NEW POST</span>
-        <a class="target-url" href="#">wetrademarketing.com/pt/copy-trading-vs-trading-manual</a>
-      </div>
-      <span class="confidence-pill">conf <span class="confidence-bar"><span class="confidence-fill" style="transform: scaleX(0.42)"></span></span> 42%</span>
-    </header>
-    <div class="card-body">
-      <div class="diff">
-        <div class="diff-row">
-          <div class="diff-label">Title</div>
-          <div class="diff-value proposed">Copy Trading vs Trading Manual: Qual Escolher em 2026?</div>
-        </div>
-      </div>
-      <blockquote class="reasoning">
-        <span class="reasoning-summary">Why</span>
-        GSC shows 2.4k impressions for "copy trading vs" variants with no wetrademarketing.com page ranking. Comparison content has weak competition (top results are forums and DR&lt;55 sites). Educational angle aligns with site's existing copy-trading topic cluster.
-      </blockquote>
-      <div class="impact-strip">
-        <strong>+280</strong>
-        <span>projected monthly clicks · over 90 days</span>
+        <button class="btn btn-ghost">Edit first</button>
+        <button class="btn btn-primary">Approve & apply <span class="btn-arrow">→</span></button>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="card-foot-meta">drafts via Content Studio</span>
-      <div class="actions">
+  </div>
+
+  <div class="proposal-card">
+    <div class="proposal-head">
+      <div class="proposal-head-left">
+        <span class="tag tag-type">New article suggestion</span>
+        <span class="tag tag-page">/pt/copy-trading-vs-trading-manual (doesn't exist yet)</span>
+      </div>
+      <div>
+        <span class="proposal-impact">+280</span>
+        <span class="proposal-impact-label">projected clicks per month</span>
+      </div>
+    </div>
+
+    <div class="proposal-body">
+      <div>
+        <div class="what-label">Suggested title</div>
+        <div class="what-row">
+          <div class="what-row-label">Title</div>
+          <div class="what-row-value after">Copy Trading vs Trading Manual: Qual Escolher em 2026?</div>
+        </div>
+      </div>
+
+      <div class="why-section">
+        <div class="why-label">Why this matters</div>
+        <div class="why-text">
+          About 2,400 people per month are searching "copy trading vs" something on Google in Brazil. We don't have any page about this comparison — but we should. The competition is weak (mostly forums), so we could rank quickly. We can use the Content Studio to draft the actual article.
+        </div>
+      </div>
+    </div>
+
+    <div class="proposal-foot">
+      <span class="proposal-foot-meta">drafts via Content Studio · expect results in 90 days</span>
+      <div class="proposal-actions">
         <button class="btn btn-ghost">Reject</button>
-        <button class="btn btn-primary">Draft article</button>
-      </div>
-    </footer>
-  </article>
-
-  <article class="card" data-status="executed">
-    <header class="card-head">
-      <div class="card-head-left">
-        <span class="type-badge">H1</span>
-        <a class="target-url" href="#">wetrademarketing.com/ms/strategi-copy-trading</a>
-      </div>
-      <span class="confidence-pill">applied 2h ago</span>
-    </header>
-    <div class="card-body">
-      <div class="diff">
-        <div class="diff-row">
-          <div class="diff-label">Was</div>
-          <div class="diff-value current">Strategi Trading WeTrade</div>
-        </div>
-        <div class="diff-row">
-          <div class="diff-label">Now</div>
-          <div class="diff-value proposed">Strategi Copy Trading: Panduan untuk Pelabur Malaysia</div>
-        </div>
+        <button class="btn btn-primary">Draft this article <span class="btn-arrow">→</span></button>
       </div>
     </div>
-    <footer class="card-foot">
-      <span class="status-note executed">▶ executed via wordpress · today 09:18 AM · snapshot saved</span>
-      <div class="actions">
-        <button class="btn btn-danger">Rollback</button>
-      </div>
-    </footer>
-  </article>
+  </div>
 
-</main>
+  <div style="text-align: center; margin-top: 16px;">
+    <button class="btn btn-ghost">Show 9 more proposals</button>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Recently done</h2>
+    <span class="section-subtitle">last 24 hours · all reversible</span>
+  </div>
+
+  <div class="done-row">
+    <div class="done-check">✓</div>
+    <div class="done-text">
+      <strong>Updated heading</strong> on /ms/strategi-copy-trading — added the keyword "Malaysia"
+    </div>
+    <div class="done-time">2 hours ago</div>
+    <button class="btn btn-ghost" style="padding: 6px 12px; font-size: 10px;">Undo</button>
+  </div>
+
+  <div class="done-row">
+    <div class="done-check">✓</div>
+    <div class="done-text">
+      <strong>Fixed title length</strong> on /pt/forex-brasil — was 72 characters (too long), now 58
+    </div>
+    <div class="done-time">5 hours ago</div>
+    <button class="btn btn-ghost" style="padding: 6px 12px; font-size: 10px;">Undo</button>
+  </div>
+
+  <div class="done-row">
+    <div class="done-check">✓</div>
+    <div class="done-text">
+      <strong>Added meta description</strong> to /id/forex-pemula
+    </div>
+    <div class="done-time">8 hours ago</div>
+    <button class="btn btn-ghost" style="padding: 6px 12px; font-size: 10px;">Undo</button>
+  </div>
+
+  <div style="text-align: center; margin-top: 16px;">
+    <button class="btn btn-ghost">See all 47 changes from last 30 days</button>
+  </div>
+</section>
+
+<footer>
+  WeTrade SEO Dashboard · Phase 2 prototype · pairs with Content Studio (live in WordPress)
+</footer>
 
 <script>
-// Tab switching (visual only — for demo)
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', e => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-  });
-});
-
-// Apply button feedback (demo only)
-document.querySelectorAll('.btn-gold').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const orig = btn.textContent;
-    btn.textContent = 'Applying...';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = '✓ 8 fixes applied · est. +120/mo';
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const text = btn.textContent.trim();
+    if (text.includes('Approve') || text.includes('Apply') || text.includes('Fix all')) {
+      const orig = btn.innerHTML;
       btn.style.background = 'var(--green)';
-    }, 1200);
-  });
-});
-
-document.querySelectorAll('.btn-primary').forEach(btn => {
-  if (btn.textContent.trim() === 'Approve' || btn.textContent.trim() === 'Apply') {
-    btn.addEventListener('click', () => {
-      const orig = btn.textContent;
-      btn.style.background = 'var(--green)';
+      btn.style.color = 'var(--ink)';
       btn.style.borderColor = 'var(--green)';
-      btn.textContent = '✓';
-      setTimeout(() => {
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.textContent = orig;
-      }, 1500);
-    });
-  }
+      btn.innerHTML = '✓ Done';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+    }
+  });
 });
 </script>
 
